@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import random
 import seaborn as sns
-from math import sqrt
+from math import sqrt, floor
 from scipy.stats import shapiro
 
 def randomwalk1D(n):
@@ -21,7 +21,7 @@ def update_plot(num, time_data, pos_data, line, scatter):
     scatter.set_offsets(np.column_stack((time_data[num-1], pos_data[num-1])))
     return line, scatter
 
-n = 100
+n = 1000
 
 time_data, pos_data = randomwalk1D(n)
 
@@ -40,11 +40,11 @@ plt.show()
 
 
 sample = []
-for i in range(0,1000):
+for i in range(0,500):
     sample.append(randomwalk1D(n)[1][-1])
 
 # Créer un histogramme de densité avec seaborn.kdeplot
-sns.histplot(sample, kde=True)
+sns.histplot(sample, bins=30)
 
 stat, p_value = shapiro(sample)
 
@@ -55,7 +55,7 @@ print(f"P-valeur : {p_value}")
 plt.xlabel('Valeurs')
 plt.ylabel('Densité')
 plt.title('Histogramme de densité')
-plt.text(x=1.2*sqrt(n), y=1.2*n, s=f"Test de Shapiro-Wilk\np-valeur : {p_value:.4f}", 
+plt.text(x=40, y=40, s=f"Test de Shapiro-Wilk\np-valeur : {p_value:.4f}", 
          bbox=dict(facecolor='white', alpha=0.5))
 plt.show()
 
