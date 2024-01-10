@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import random
 import seaborn as sns
+from math import sqrt
+from scipy.stats import shapiro
 
 def randomwalk1D(n):
     x, y = 0, 0
@@ -44,9 +46,18 @@ for i in range(0,1000):
 # Créer un histogramme de densité avec seaborn.kdeplot
 sns.histplot(sample, kde=True)
 
+stat, p_value = shapiro(sample)
+
+print(f"Statistique du test : {stat}")
+print(f"P-valeur : {p_value}")
+
 # Ajouter des labels et un titre
 plt.xlabel('Valeurs')
 plt.ylabel('Densité')
-plt.title('Histogramme de densité pour un échantillon gaussien')
+plt.title('Histogramme de densité')
+plt.text(x=1.2*sqrt(n), y=1.2*n, s=f"Test de Shapiro-Wilk\np-valeur : {p_value:.4f}", 
+         bbox=dict(facecolor='white', alpha=0.5))
 plt.show()
+
+
 
